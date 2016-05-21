@@ -45,8 +45,15 @@ namespace Github.Api
         {
             string url = $"https://api.github.com/users/{userName}";
 
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+
             var json = await HttpClient.GetStringAsync(url);
-            var user = JsonConvert.DeserializeObject<User>(json);
+            var user = JsonConvert.DeserializeObject<User>(json, settings);
+
+            user.Name = user.Name ?? "No name found";
+            user.Location = user.Location ?? "No location found";
+            user.Company = user.Company ?? "No company found";
 
             return user;
         }

@@ -10,10 +10,10 @@ namespace Github.Model
     public class User
     {
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; set; } 
 
         [JsonProperty(PropertyName = "company")]
-        public string Company { get; set; }
+        public string Company { get; set; } 
 
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
