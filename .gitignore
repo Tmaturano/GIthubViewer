@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/GithubViewerXamarin/GithubViewerXamarin.Droid/Resources/drawable/splash_screen.xml
+/GithubViewerXamarin/GithubViewerXamarin.Droid/Resources/values

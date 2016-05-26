@@ -4,18 +4,18 @@
              x:Class="GithubViewerXamarin.MainPage">
 
   <StackLayout Orientation="Vertical" BackgroundColor="Transparent">
-    <StackLayout BackgroundColor="Black" HeightRequest="40">
+    <StackLayout BackgroundColor="Black" HeightRequest="40" Orientation="Horizontal" Padding="5">
+      <Image Source="{Binding gitviewer_logo}" HeightRequest="30" WidthRequest="30" HorizontalOptions="Center"/>
       <Label
         HorizontalTextAlignment="Center"
         TextColor="White"
-        FontAttributes="Bold"
+        FontAttributes="Bold"        
         Margin="0, 10"
         Text="Github Repository Viewer">
       </Label>
     </StackLayout>
 
     <StackLayout Orientation="Vertical" Padding="5">
-
       <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
         <Entry WidthRequest="160" Placeholder="User Name" Text="{Binding UserName}"></Entry>
         <Button Text="Search" Command="{Binding GetUserCommand}"></Button>
@@ -29,7 +29,7 @@
         <StackLayout Orientation="Vertical">
           <Label Text="{Binding User.Name}" FontAttributes="Italic"/>
           <Label Text="{Binding User.Location}" FontAttributes="Italic"/>
-          <Label Text="{Binding User.Company}" FontAttributes="Italic"/>          
+          <Label Text="{Binding User.Company}" FontAttributes="Italic"/>
           <Label Text="{Binding User.GitUrl}" FontAttributes="Italic" TextColor="Blue">
             <Label.GestureRecognizers>
               <TapGestureRecognizer

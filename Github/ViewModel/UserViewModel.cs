@@ -15,8 +15,6 @@ namespace Github.ViewModel
 {
     public class UserViewModel : INotifyPropertyChanged
     {
-      
-
         #region Private variables
 
         private int _totalRepositories = 0;
@@ -25,6 +23,22 @@ namespace Github.ViewModel
         #endregion
 
         #region Properties
+
+        public ImageSource gitviewer_logo
+        {
+            //Not Working for windows app, just for mobile.
+            get
+            {
+                //Not working for windows
+
+                return Device.OnPlatform(
+                                iOS: ImageSource.FromFile("Resources/drawable/gitviewer_logo.jpg"),
+                                Android: ImageSource.FromFile("Resources/gitviewer_logo.jpg"),
+                                WinPhone: ImageSource.FromFile("Assets/gitviewer_logo.jpg"));
+
+            }
+        }
+
 
         private string _userName;
 
@@ -62,10 +76,10 @@ namespace Github.ViewModel
             {
                 _repositories = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Repositories)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RepositoriesLoaded)));                
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RepositoriesLoaded)));
             }
         }
-        
+
         private bool _isSearching;
 
         public bool IsSearching
@@ -90,7 +104,7 @@ namespace Github.ViewModel
         {
             get
             {
-                return $"{_totalRepositories} repository(ies)";                
+                return $"{_totalRepositories} repository(ies)";
             }
         }
 
@@ -103,7 +117,7 @@ namespace Github.ViewModel
             _messageService = DependencyService.Get<IMessageService>();
 
             IsSearching = false;
-            GetUserCommand = new Command(async() => await GetUserRepository());
+            GetUserCommand = new Command(async () => await GetUserRepository());
             OpenGithubCommand = new Command(OpenGithubSite);
         }
 
@@ -134,7 +148,7 @@ namespace Github.ViewModel
                 repositories = Repositories;
             }
 
-            _totalRepositories = repositories.Count;  
+            _totalRepositories = repositories.Count;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalRepositories)));
 
             return repositories;
