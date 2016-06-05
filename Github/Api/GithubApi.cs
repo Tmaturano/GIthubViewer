@@ -31,9 +31,9 @@ namespace Github.Api
         //https://api.github.com/users/Tmaturano
         //https://api.github.com/users/Tmaturano/repos
 
-        public static async Task<IList<Repository>> GetUserRepositoryAsync(string user)
+        public static async Task<IList<Repository>> GetUserRepositoryAsync(string user, int page = 1)
         {
-            string url = $"https://api.github.com/users/{user}/repos";
+            string url = $"https://api.github.com/users/{user}/repos?page={page}";
 
             var json = await HttpClient.GetStringAsync(url);
             var repositories = JsonConvert.DeserializeObject<List<Repository>>(json);

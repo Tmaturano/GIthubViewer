@@ -25,20 +25,17 @@ namespace Github.ViewModel
         #region Properties
 
         public ImageSource gitviewer_logo
-        {
-            //Not Working for windows app, just for mobile.
+        {            
             get
             {
-                //Not working for windows
-
                 return Device.OnPlatform(
                                 iOS: ImageSource.FromFile("Resources/drawable/gitviewer_logo.jpg"),
                                 Android: ImageSource.FromFile("Resources/gitviewer_logo.jpg"),
                                 WinPhone: ImageSource.FromFile("Assets/gitviewer_logo.jpg"));
-
             }
         }
-
+        
+        public int NextPage { get; private set; } = 1;
 
         private string _userName;
 
@@ -139,9 +136,7 @@ namespace Github.ViewModel
             if (!string.IsNullOrWhiteSpace(repositoryName))
             {
                 repositories = new ObservableCollection<Repository>(Repositories.Where(r => r.Name.ToLower()
-                .Contains(repositoryName.ToLower())));
-
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalRepositories)));                
+                .Contains(repositoryName.ToLower())));                                
             }
             else
             {
@@ -159,14 +154,19 @@ namespace Github.ViewModel
             IsSearching = true;
             try
             {
+                NextPage = 1;
+
                 var user = await GithubApi.GetUserAsync(UserName);
                 User = user;
 
                 var repositories = await GithubApi.GetUserRepositoryAsync(UserName);
                 Repositories = new ObservableCollection<Repository>(repositories);
 
-
-
+                if (Repositories.Count.Equals(30))                
+                    NextPage++;                
+                else
+                    NextPage = 0;
+                
                 _totalRepositories = Repositories.Count;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalRepositories)));
             }
@@ -183,6 +183,33 @@ namespace Github.ViewModel
                     errorMessage = ex.Message;
 
                 await _messageService.ShowAsync("Alert", errorMessage);
+            }
+
+            IsSearching = false;
+        }
+
+        public async Task GetMoreRepositories()
+        {
+            IsSearching = true;
+
+            if (NextPage > 0)
+            {
+                var repositories = await GithubApi.GetUserRepositoryAsync(UserName, NextPage);
+                
+                NextPage++;
+
+                if (repositories.Count < 30)
+                {
+                    NextPage = 0;
+                }
+
+                foreach (var item in repositories)
+                {
+                    Repositories.Add(item);
+                }
+
+                _totalRepositories += repositories.Count;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalRepositories)));
             }
 
             IsSearching = false;

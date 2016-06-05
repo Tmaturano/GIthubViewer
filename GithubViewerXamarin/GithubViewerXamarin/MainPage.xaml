@@ -48,13 +48,15 @@
           IsVisible="{Binding RepositoriesLoaded}"
           Placeholder="Search for a specific repository...">
         </SearchBar>
-        <ListView x:Name="repositoriesList" ItemsSource="{Binding Repositories}">
+        
+        <ListView x:Name="repositoriesList" ItemsSource="{Binding Repositories}" ItemAppearing="ItemAppearing">
           <ListView.ItemTemplate>
             <DataTemplate>
               <TextCell Text="{Binding CompleteDescription}" Detail="{Binding Name}" />
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>
+        
         <Label Text="{Binding TotalRepositories}" IsVisible="{Binding RepositoriesLoaded}"></Label>
         <ActivityIndicator IsRunning="{Binding IsSearching}" IsVisible="{Binding IsSearching}"/>
       </StackLayout>
