@@ -1,10 +1,14 @@
-# GithubViewer
+
+# Github Repository Viewer
 GithubViewer came up during my studies of Xamarin and its idea is simple and straightforward: Show a list of repositories from a specific user!
 
-How to use:
+#####Need Internet Connection for utilization.
+
+##How to use:
 
 * Enter the user name and then click "Search", the app will automatically load the repositories from the user entered as well as other informations
 such as the name, location, etc.
+* Scroll down to load more repositories asynchrony(the github API supplies 30 repositories as default per request).
 * You can also find a specific repository in the recent searched list.
 
 ___
