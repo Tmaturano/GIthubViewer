@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GithubViewerXamarin.MainPage">
 
-  <StackLayout Orientation="Vertical" BackgroundColor="Transparent">
+  <StackLayout Orientation="Vertical" >
     <StackLayout BackgroundColor="Black" HeightRequest="40" Orientation="Horizontal" Padding="5">
-      <Image Source="{Binding gitviewer_logo}" HeightRequest="30" WidthRequest="30" HorizontalOptions="Center"/>
+      <Image Source="{Binding GitLogo}" HeightRequest="30" WidthRequest="30" HorizontalOptions="Center"/>
       <Label
         HorizontalTextAlignment="Center"
         TextColor="White"

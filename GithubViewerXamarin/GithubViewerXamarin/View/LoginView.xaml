@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GithubViewerXamarin.View.LoginView">
+  
+  <StackLayout Orientation="Vertical" HorizontalOptions="Center" Padding="10" >
+    <Image Source="{Binding GitLogo}" HeightRequest="60" WidthRequest="60" HorizontalOptions="Center"/>
+    <Label Text="Sign in to GitHub" FontSize="Medium" HorizontalTextAlignment="Center" Margin="0, 10, 0, 20"></Label>    
+    <Entry Text="{Binding LoginName}" Placeholder="Username or email address"></Entry>
+    <Entry Text="{Binding Password}" Placeholder="Password" IsPassword="True"></Entry>
+    <Button Text="Login" Command="{Binding LoginComamnd}" BackgroundColor="#46d246" FontAttributes="Bold" TextColor="White"></Button>
+  </StackLayout>
+</ContentPage>

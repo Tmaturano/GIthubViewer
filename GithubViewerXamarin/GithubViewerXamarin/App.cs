@@ -1,4 +1,6 @@
 ﻿using Github.Interfaces;
+using GithubViewerXamarin.View;
+using GithubViewerXamarin.View.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +13,12 @@ namespace GithubViewerXamarin
     public class App : Application
     {
         public App()
-        {
-            // The root page of your application
-
+        {            
             DependencyService.Register<IMessageService, MessageService>();
+            DependencyService.Register<INavigationService, NavigationService>();
 
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
+            MainPage = new NavigationPage(new LoginView());
         }
 
         protected override void OnStart()

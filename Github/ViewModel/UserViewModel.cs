@@ -24,7 +24,7 @@ namespace Github.ViewModel
 
         #region Properties
 
-        public ImageSource gitviewer_logo
+        public ImageSource GitLogo
         {            
             get
             {

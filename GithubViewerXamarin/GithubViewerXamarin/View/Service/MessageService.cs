@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GithubViewerXamarin
+namespace GithubViewerXamarin.View.Service
 {
     public class MessageService : IMessageService
     {
