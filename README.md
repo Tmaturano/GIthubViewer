@@ -6,6 +6,7 @@ GithubViewer came up during my studies of Xamarin and its idea is simple and str
 
 ##How to use:
 
+* Sign in to Github Repository Viewer with your Github Login.
 * Enter the user name and then click "Search", the app will automatically load the repositories from the user entered as well as other informations
 such as the name, location, etc.
 * Scroll down to load more repositories asynchrony(the github API supplies 30 repositories as default per request).
