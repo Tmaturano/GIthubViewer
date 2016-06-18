@@ -1,66 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GithubViewerXamarin.MainPage">
+             x:Class="GithubViewerXamarin.MainPage" Title="Repositories">
 
-  <StackLayout Orientation="Vertical" >
-    <StackLayout BackgroundColor="Black" HeightRequest="40" Orientation="Horizontal" Padding="5">
-      <Image Source="{Binding GitLogo}" HeightRequest="30" WidthRequest="30" HorizontalOptions="Center"/>
-      <Label
-        HorizontalTextAlignment="Center"
-        TextColor="White"
-        FontAttributes="Bold"        
-        Margin="0, 10"
-        Text="Github Repository Viewer">
-      </Label>
-    </StackLayout>
-
-    <StackLayout Orientation="Vertical" Padding="5">
-      <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-        <Entry WidthRequest="160" Placeholder="User Name" Text="{Binding UserName}"></Entry>
-        <Button Text="Search" Command="{Binding GetUserCommand}"></Button>
+  
+  <ContentPage.Content>
+    <StackLayout Orientation="Vertical" >
+      <StackLayout BackgroundColor="Black" HeightRequest="40" Orientation="Horizontal" Padding="5, 5, 5, 5">
+        <Image Source="{Binding GitLogo}" HeightRequest="30" WidthRequest="30" HorizontalOptions="Start"/>
+        <Label          
+          HorizontalOptions="Start"
+          TextColor="White"
+          FontAttributes="Bold"
+          Margin="0, 10"
+          Text="Github Repository Viewer">
+        </Label>
       </StackLayout>
+      <StackLayout Padding="5">
+        <Label          
+          FontSize="12"    
+          FontAttributes="Bold"
+          XAlign="Start"
+          HorizontalOptions="Start"
+          Text="{Binding LoggedUserName}"></Label>
+      </StackLayout>      
 
-      <StackLayout Margin="5, 10, 5, 10" Orientation="Horizontal">
-        <StackLayout  HeightRequest="120" WidthRequest="120" >
-          <Image Source="{Binding User.AvatarUrl}"></Image>
+      <StackLayout Orientation="Vertical" Padding="5">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+          <Entry WidthRequest="160" Placeholder="User Name" Text="{Binding UserName}"></Entry>
+          <Button Text="Search" Command="{Binding GetUserCommand}" BackgroundColor="#46d246"></Button>
         </StackLayout>
 
-        <StackLayout Orientation="Vertical">
-          <Label Text="{Binding User.Name}" FontAttributes="Italic"/>
-          <Label Text="{Binding User.Location}" FontAttributes="Italic"/>
-          <Label Text="{Binding User.Company}" FontAttributes="Italic"/>
-          <Label Text="{Binding User.GitUrl}" FontAttributes="Italic" TextColor="Blue">
-            <Label.GestureRecognizers>
-              <TapGestureRecognizer
-                  Command="{Binding OpenGithubCommand}"/>
-            </Label.GestureRecognizers>
-          </Label>
+        <StackLayout Margin="5, 10, 5, 10" Orientation="Horizontal">
+          <StackLayout  HeightRequest="120" WidthRequest="120" >
+            <Image Source="{Binding User.AvatarUrl}"></Image>
+          </StackLayout>
+
+          <StackLayout Orientation="Vertical">
+            <Label Text="{Binding User.Name}" FontAttributes="Italic"/>
+            <Label Text="{Binding User.Location}" FontAttributes="Italic"/>
+            <Label Text="{Binding User.Company}" FontAttributes="Italic"/>
+            <Label Text="{Binding User.GitUrl}" FontAttributes="Italic" TextColor="Blue">
+              <Label.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding OpenGithubCommand}"/>
+              </Label.GestureRecognizers>
+            </Label>
+
+          </StackLayout>
 
         </StackLayout>
 
-      </StackLayout>
+        <StackLayout >
+          <!--Spacing="10" Padding="20"-->
+          <SearchBar
+            x:Name="searchRepository"
+            IsVisible="{Binding RepositoriesLoaded}"
+            Placeholder="Search for a specific repository...">
+          </SearchBar>
 
-      <StackLayout >
-        <!--Spacing="10" Padding="20"-->
-        <SearchBar
-          x:Name="searchRepository"
-          IsVisible="{Binding RepositoriesLoaded}"
-          Placeholder="Search for a specific repository...">
-        </SearchBar>
-        
-        <ListView x:Name="repositoriesList" ItemsSource="{Binding Repositories}" ItemAppearing="ItemAppearing">
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <TextCell Text="{Binding CompleteDescription}" Detail="{Binding Name}" />
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-        
-        <Label Text="{Binding TotalRepositories}" IsVisible="{Binding RepositoriesLoaded}"></Label>
-        <ActivityIndicator IsRunning="{Binding IsSearching}" IsVisible="{Binding IsSearching}"/>
+          <ListView x:Name="repositoriesList" ItemsSource="{Binding Repositories}" ItemAppearing="ItemAppearing">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <TextCell Text="{Binding CompleteDescription}" Detail="{Binding Name}" />
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+
+          <Label Text="{Binding TotalRepositories}" IsVisible="{Binding RepositoriesLoaded}"></Label>
+          <ActivityIndicator IsRunning="{Binding IsSearching}" IsVisible="{Binding IsSearching}"/>
+        </StackLayout>
       </StackLayout>
     </StackLayout>
-  </StackLayout>
-
+  </ContentPage.Content>
 </ContentPage>

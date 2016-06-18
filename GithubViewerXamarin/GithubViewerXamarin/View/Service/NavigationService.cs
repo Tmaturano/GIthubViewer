@@ -11,7 +11,7 @@ namespace GithubViewerXamarin.View.Service
     {
         public async Task NavigateToLoginView()
         {
-            await App.Current.MainPage.Navigation.PushAsync(new LoginView());
+            await App.Current.MainPage.Navigation.PushModalAsync(new LoginView());
         }
 
         public async Task NavigateToMainView()

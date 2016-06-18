@@ -1,10 +1,6 @@
 ﻿using Github.Interfaces;
 using GithubViewerXamarin.View;
 using GithubViewerXamarin.View.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xamarin.Forms;
 
@@ -12,13 +8,28 @@ namespace GithubViewerXamarin
 {
     public class App : Application
     {
+        public static bool IsUserLoggedIn
+        {
+            get
+            {
+                return Current.Properties.ContainsKey("LoggedUser") &&
+                    string.IsNullOrWhiteSpace(Current.Properties["LoggedUser"] as string);
+            }
+        }
+
         public App()
         {            
             DependencyService.Register<IMessageService, MessageService>();
             DependencyService.Register<INavigationService, NavigationService>();
 
-            //MainPage = new MainPage();
-            MainPage = new NavigationPage(new LoginView());
+            if (IsUserLoggedIn)
+            {
+                MainPage = new NavigationPage(new MainPage());
+            }
+            else
+            {                
+                MainPage = new NavigationPage(new LoginView());
+            }
         }
 
         protected override void OnStart()

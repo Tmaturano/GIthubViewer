@@ -24,8 +24,21 @@ namespace Github.ViewModel
 
         #region Properties
 
+        public string LoggedUserName
+        {
+            get
+            {
+                if (Application.Current.Properties.ContainsKey("LoggedUser"))
+                {
+                    return $"Welcome {Application.Current.Properties["LoggedUser"] as string}";
+                }
+
+                return string.Empty;
+            }
+        }
+
         public ImageSource GitLogo
-        {            
+        {
             get
             {
                 return Device.OnPlatform(
@@ -34,7 +47,7 @@ namespace Github.ViewModel
                                 WinPhone: ImageSource.FromFile("Assets/gitviewer_logo.jpg"));
             }
         }
-        
+
         public int NextPage { get; private set; } = 1;
 
         private string _userName;
@@ -136,7 +149,7 @@ namespace Github.ViewModel
             if (!string.IsNullOrWhiteSpace(repositoryName))
             {
                 repositories = new ObservableCollection<Repository>(Repositories.Where(r => r.Name.ToLower()
-                .Contains(repositoryName.ToLower())));                                
+                .Contains(repositoryName.ToLower())));
             }
             else
             {
@@ -162,19 +175,25 @@ namespace Github.ViewModel
                 var repositories = await GithubApi.GetUserRepositoryAsync(UserName);
                 Repositories = new ObservableCollection<Repository>(repositories);
 
-                if (Repositories.Count.Equals(30))                
-                    NextPage++;                
+                if (Repositories.Count.Equals(30))
+                    NextPage++;
                 else
                     NextPage = 0;
-                
+
                 _totalRepositories = Repositories.Count;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalRepositories)));
             }
             catch (Exception ex)
             {
                 //Could be logged
-                //The common error that can occurs here is the Http 404 not found.
+                //The common error that can occurs here is the Http 404 not found or Response == null(No internet connection).
                 string errorMessage = string.Empty;
+
+                if (ex.Message.Contains("NameResolutionFailure"))
+                {
+                    errorMessage = "No internet connection.";
+                }
+
                 if (ex.Message.Contains("404"))
                 {
                     errorMessage = "User not found!";
@@ -195,7 +214,7 @@ namespace Github.ViewModel
             if (NextPage > 0)
             {
                 var repositories = await GithubApi.GetUserRepositoryAsync(UserName, NextPage);
-                
+
                 NextPage++;
 
                 if (repositories.Count < 30)
